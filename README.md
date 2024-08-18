@@ -10,5 +10,6 @@
 - React native 
 - Redux toolkit
 - Redux persist
+- Async storage
 
 
