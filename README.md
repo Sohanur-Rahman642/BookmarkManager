@@ -2,7 +2,7 @@
 ##### It's a cross platform react native bookmark manager app to manage your bookmarks
 ##### I have completed it as part of the recruitment process of React native developer at Selise 
 ##### App UI Screens
-<img src="images/image1.png" width="200"> &emsp; &emsp;
+<img src="image/image1.png" width="200"> &emsp; &emsp; <img src="image/image2.png" width="200"> 
 
  
 ### Tools & libraries used in this project: 
