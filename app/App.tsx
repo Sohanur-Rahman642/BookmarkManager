@@ -7,6 +7,7 @@ import {
 import { Provider } from 'react-redux';
 import { persistor, store } from './data/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import BookmarkManager from './component/BookmarkManager';
 
 
 function App(): React.JSX.Element {
@@ -19,6 +20,7 @@ function App(): React.JSX.Element {
             barStyle={'dark-content'}
             backgroundColor='#fff'
           />
+            <BookmarkManager />
           </SafeAreaView>
       </PersistGate>
     </Provider>
