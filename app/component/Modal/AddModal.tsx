@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, Alert, TextInput, Button, View, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, Alert, TextInput, View, TouchableOpacity } from 'react-native';
 import { Picker as SelectPicker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBookMark, addCategory } from '../../data/slice/bookmarkSlice';
@@ -102,9 +102,15 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
             ))}
           </SelectPicker> 
           <View style={styles.buttonContainer}>
-            <Button title="Add Bookmark" onPress={handleAddBookMark} />
-            <View style={styles.buttonSpacing} />
-            <Button title="Close" onPress={onClose} />
+            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
+              <Text style={styles.cancelButtonText}>Cancel</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.saveButton} onPress={handleAddBookMark} >
+              <Text style={styles.saveButtonText}>Save</Text>
+            </TouchableOpacity>
+
+           
           </View>
         </View>
       </View>
@@ -152,9 +158,42 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20
   },
   buttonSpacing: {
     marginVertical: 10,
+  },
+  cancelButton: {
+    borderWidth: 1,
+    padding: 10,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: 'red',
+    backgroundColor: 'red',
+  },
+  cancelButtonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+  },
+  saveButton: {
+    borderWidth: 1,
+    padding: 10,
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderColor: 'blue',
+    backgroundColor: 'blue',
+  },
+  saveButtonText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
   },
 });
 

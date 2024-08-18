@@ -80,6 +80,7 @@ export default function BookmarkManager() {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.appTitle}>BookMark Manager</Text>
       <FlatList
         data={Object.keys(categories)}
         renderItem={renderCategoryItem}
@@ -106,12 +107,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: 'white'
   },
+  appTitle: {textAlign: 'center', fontSize: 32, fontWeight: 'bold'},
   categoryList: {
     flex: 1,
   },
   categoryContainer: {
-    marginVertical: 10,
+    marginVertical: 20,
   },
   categoryTitle: {
     fontSize: 18,
