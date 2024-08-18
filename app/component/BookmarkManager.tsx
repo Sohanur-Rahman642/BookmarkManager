@@ -5,6 +5,8 @@ import { RootState } from '../data/store/store'
 import AddModal from './Modal/AddModal'
 import { BookMark } from '../data/slice/types'
 import DetailModal from './Modal/DetailModal'
+import WebView from 'react-native-webview'
+import WebViewBottomSheet from './Modal/WebViewBottomSheet'
 
 
 export interface ClickedBookMarks {
@@ -23,6 +25,8 @@ export default function BookmarkManager() {
     category: ''
   })
 
+  const [isOpenWebView, setOpenWebView] = useState<boolean>(false)
+
   const categories = useSelector((state: RootState) => state.bookmarks.categories)
 
   const openModal = () => {
@@ -37,9 +41,7 @@ export default function BookmarkManager() {
     setDetailModalVisible(false)
   }
 
-  const handlePressDetails = (item : BookMark, category: string) => {
-    console.log("item ", item)
-    setDetailModalVisible(true)
+  const onSelectBookmark = (item: BookMark, category: string) => {
     setClickedBookMarks({
       title: item?.title,
       url: item?.url,
@@ -47,16 +49,34 @@ export default function BookmarkManager() {
     })
   }
 
+  const handlePressDetails = (item : BookMark, category: string) => {
+    console.log("item ", item)
+    setDetailModalVisible(true)
+    onSelectBookmark(item, category)
+  }
+
+  const openWebView = (item: BookMark, category: string) => {
+      onSelectBookmark(item, category)
+      setOpenWebView(true)
+  }
+
+  const closeWebView = () => {
+    setOpenWebView(false)
+  }
+
   const renderBookmarks = ({ item: bookmark }: { item: BookMark }, category : string) => {
     return (
-      <TouchableOpacity style={styles.bookmarkContainer}>
+      <View  style={styles.bookmarkContainer}>
+      <TouchableOpacity onPress={() => openWebView(bookmark, category)}>
         <Text style={styles.bookmarkTitle}>{bookmark.title}</Text>
+      </TouchableOpacity>
+
         <TouchableOpacity 
           style={styles.detailsButton} 
           onPress={() => handlePressDetails(bookmark, category)} >
-          <Text>Details</Text>
+            <Text>Details</Text>
         </TouchableOpacity>
-      </TouchableOpacity>
+      </View>
     )
   }
 
@@ -99,6 +119,8 @@ export default function BookmarkManager() {
       <TouchableOpacity style={styles.fab} onPress={openModal}>
         <Text style={styles.fabText}>+</Text>
       </TouchableOpacity>
+
+      <WebViewBottomSheet visible={isOpenWebView} onClose={closeWebView}  url={clickedBookMarks?.url} />
     </View>
   )
 }
