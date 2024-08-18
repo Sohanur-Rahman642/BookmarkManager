@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, Pressable, View, Alert, TextInput, Button, TouchableOpacity } from 'react-native';
+import { Modal, StyleSheet, Text, Alert, TextInput, Button, View, TouchableOpacity } from 'react-native';
 import { Picker as SelectPicker } from '@react-native-picker/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import { addBookMark, addCategory } from '../../data/slice/bookmarkSlice';
 import { RootState } from '../../data/store/store';
 
 interface ModalProps {
-  visible: boolean
-  handleModalClose: () => void
+  visible: boolean;
+  handleModalClose: () => void;
 }
 
 const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
@@ -15,43 +15,39 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
   const [url, setUrl] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [newCategoryName, setNewCategoryName] = useState<string>('');
-  const [showNewCategoryInput, setShowNewCategoryInput] = useState<boolean>(
-    false
-  );
+  const [showNewCategoryInput, setShowNewCategoryInput] = useState<boolean>(false);
 
-  const categories = useSelector((state: RootState) => state.bookmarks.categories)
-
+  const categories = useSelector((state: RootState) => state.bookmarks.categories);
   const dispatch = useDispatch();
 
   const handleAddCategory = () => {
-    if(newCategoryName){
-        setShowNewCategoryInput(true)
-        setSelectedCategory(newCategoryName)
-        dispatch(addCategory(newCategoryName))
+    if (newCategoryName) {
+      setShowNewCategoryInput(true);
+      setSelectedCategory(newCategoryName);
+      dispatch(addCategory(newCategoryName));
     }
-  }
+  };
 
   const handleAddBookMark = () => {
     if (title && url && (selectedCategory || newCategoryName)) {
       const category = showNewCategoryInput ? newCategoryName : selectedCategory;
       dispatch(addBookMark({ category, bookmark: { title, url } }));
+      onClose(); // Close the modal after adding bookmark
     }
   };
 
-
   const onClose = () => {
-    handleModalClose()
-    setTitle('')
-    setUrl('')
-    setSelectedCategory('')
-    setNewCategoryName('')
-  }
+    handleModalClose();
+    setTitle('');
+    setUrl('');
+    setSelectedCategory('');
+    setNewCategoryName('');
+  };
 
-  const onCategoryChange = (itemValue: any) => {
-    setSelectedCategory(itemValue)
-    setNewCategoryName(itemValue)
-  }
-
+  const onCategoryChange = (itemValue: string) => {
+    setSelectedCategory(itemValue);
+    setNewCategoryName(itemValue);
+  };
 
   return (
     <Modal
@@ -62,106 +58,103 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
         Alert.alert('Modal has been closed.');
         handleModalClose();
       }}>
-      <View style={{ flex: 1, justifyContent: 'center', padding: 16, backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
+      <View style={styles.overlay}>
+        <View style={styles.modalView}>
           <TextInput
             placeholder="Title"
             value={title}
             onChangeText={setTitle}
             maxLength={30}
-            style={{ borderBottomWidth: 1, marginBottom: 16 }}
+            style={styles.input}
           />
           <TextInput
             placeholder="URL"
             value={url}
             onChangeText={setUrl}
             keyboardType="url"
-            style={{ borderBottomWidth: 1, marginBottom: 16 }}
+            style={styles.input}
           />
-
-          <View style={{flexDirection: 'row', marginVertical: 10}}>
-            <View style={{width: '70%'}}>
+          <View style={styles.categoryContainer}>
+            <View style={styles.categoryInputContainer}>
               <TextInput
                 placeholder="Category"
                 value={newCategoryName}
                 onChangeText={setNewCategoryName}
-                style={{ borderBottomWidth: 1, marginBottom: 16 }}
+                style={styles.input}
               />
             </View>
-
-         <TouchableOpacity 
-            style={{width: '30%', justifyContent: 'center', alignItems:'center'}}
-            onPress={handleAddCategory}>
-              <View style={{justifyContent: 'center', alignItems: 'center', borderWidth: 1, width: 100}}>
-                <Text style={{ color: '#000', fontSize: 40}}>+</Text>
+            <TouchableOpacity 
+              style={styles.addCategoryButton}
+              onPress={handleAddCategory}
+            >
+              <View style={styles.addCategoryInner}>
+                <Text style={styles.addCategoryText}>+</Text>
               </View>
             </TouchableOpacity>
           </View>
-
           <SelectPicker
-                selectedValue={selectedCategory}
-                onValueChange={(itemValue) => onCategoryChange(itemValue)}
-              >
-                <SelectPicker.Item label="Select a category" value="" />
-                {Object.keys(categories).map((category) => (
-                  <SelectPicker.Item label={category} value={category} key={category} />
-                ))}
+            selectedValue={selectedCategory}
+            onValueChange={(itemValue) => onCategoryChange(itemValue)}
+          >
+            <SelectPicker.Item label="Select a category" value="" />
+            {Object.keys(categories).map((category) => (
+              <SelectPicker.Item label={category} value={category} key={category} />
+            ))}
           </SelectPicker> 
-          
-          <View style={{marginVertical: 10}}/>
-          <Button title="Add Bookmark" onPress={handleAddBookMark} />
-          <View style={{marginVertical: 10}}/>
-          <Button title="Close" onPress={onClose} />
+          <View style={styles.buttonContainer}>
+            <Button title="Add Bookmark" onPress={handleAddBookMark} />
+            <View style={styles.buttonSpacing} />
+            <Button title="Close" onPress={onClose} />
+          </View>
         </View>
       </View>
-
-      
     </Modal>
   );
 };
 
-
 const styles = StyleSheet.create({
-  centeredView: {
+  overlay: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    padding: 16,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
+    padding: 20,
+    borderRadius: 10,
+  },
+  input: {
+    borderBottomWidth: 1,
+    marginBottom: 16,
+  },
+  categoryContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+  },
+  categoryInputContainer: {
+    width: '70%',
+  },
+  addCategoryButton: {
+    width: '30%',
+    justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+  addCategoryInner: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    width: 100,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
+  addCategoryText: {
+    color: '#000',
+    fontSize: 40,
   },
-  buttonClose: {
-    backgroundColor: '#2196F3',
+  buttonContainer: {
+    marginVertical: 10,
   },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  buttonSpacing: {
+    marginVertical: 10,
   },
 });
 

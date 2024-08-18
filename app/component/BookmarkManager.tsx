@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Button, FlatList, Text, TouchableOpacity, View } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import {  useSelector } from 'react-redux'
 import { RootState } from '../data/store/store'
 import AddModal from './Modal/AddModal'
 import { BookMark } from '../data/slice/types'
@@ -15,7 +15,6 @@ export interface ClickedBookMarks {
 
 
 export default function BookmarkManager() {
-
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false)
   const [isDetailModalVisible, setDetailModalVisible] = useState<boolean>(false)
   const [clickedBookMarks, setClickedBookMarks] = useState<ClickedBookMarks>({
@@ -23,8 +22,6 @@ export default function BookmarkManager() {
     url: '',
     category: ''
   })
-
- 
 
   const categories = useSelector((state: RootState) => state.bookmarks.categories)
 
@@ -50,57 +47,110 @@ export default function BookmarkManager() {
     })
   }
 
-  
   const renderBookmarks = ({ item: bookmark }: { item: BookMark }, category : string) => {
-    
-   return(
-    <TouchableOpacity style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15, marginHorizontal: 15}} >
-      <Text style={{ fontSize: 16, color: 'blue' }}>{bookmark.title}</Text>
-
-      <TouchableOpacity 
-        style={{padding: 5, borderWidth: 1}} 
-        onPress={() => handlePressDetails(bookmark, category)} >
-        <Text>Details</Text></TouchableOpacity>
-    </TouchableOpacity>
-   )
+    return (
+      <TouchableOpacity style={styles.bookmarkContainer}>
+        <Text style={styles.bookmarkTitle}>{bookmark.title}</Text>
+        <TouchableOpacity 
+          style={styles.detailsButton} 
+          onPress={() => handlePressDetails(bookmark, category)} >
+          <Text>Details</Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+    )
   }
 
   const renderCategoryItem = ({ item: category }: { item: string }) => {
     if (categories[category].bookmarks.length === 0) {
       return null; 
     }
-  
+
     return (
-      <View style={{ marginVertical: 10 }}>
-        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{category}</Text>
+      <View style={styles.categoryContainer}>
+        <Text style={styles.categoryTitle}>{category}</Text>
         <FlatList
           data={categories[category].bookmarks}
-          renderItem={(bookmark) => renderBookmarks(bookmark, category)}
-          keyExtractor={(item, index) => item.title + index.toString()}
-          style={{ marginVertical: 10, borderWidth: 1, padding: 10 }}
+          renderItem={(props) => renderBookmarks(props, category)}
+          keyExtractor={(item, index) => index} 
+          style={styles.bookmarkList}
         />
       </View>
     );
   };
 
   return (
-    <View style={{ flex: 1, padding: 16 }}>
-        <Button title="Add Bookmark" onPress={openModal} />
-        <FlatList
-          data={Object.keys(categories)}
-          renderItem={renderCategoryItem}
-          keyExtractor={(item) => item}
-          style={{ flex: 1 }}
-        />
-
-        <AddModal visible={isModalVisible} handleModalClose={closeAddModal} />
-        <DetailModal 
-            visible={isDetailModalVisible}
-            handleModalClose={closeDetailModal}
-            title={clickedBookMarks?.title}
-            url={clickedBookMarks?.url}
-            category={clickedBookMarks?.category}
-        />
+    <View style={styles.container}>
+      <FlatList
+        data={Object.keys(categories)}
+        renderItem={renderCategoryItem}
+        keyExtractor={(item, index) => index}
+        style={styles.categoryList}
+        showsVerticalScrollIndicator={false}
+      />
+      <AddModal visible={isModalVisible} handleModalClose={closeAddModal} />
+      <DetailModal 
+        visible={isDetailModalVisible}
+        handleModalClose={closeDetailModal}
+        title={clickedBookMarks?.title}
+        url={clickedBookMarks?.url}
+        category={clickedBookMarks?.category}
+      />
+      <TouchableOpacity style={styles.fab} onPress={openModal}>
+        <Text style={styles.fabText}>+</Text>
+      </TouchableOpacity>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  categoryList: {
+    flex: 1,
+  },
+  categoryContainer: {
+    marginVertical: 10,
+  },
+  categoryTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  bookmarkList: {
+    marginTop: 10,
+    borderWidth: 1,
+    padding: 10
+  },
+  bookmarkContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
+    marginHorizontal: 15,
+  },
+  bookmarkTitle: {
+    fontSize: 16,
+    color: 'blue',
+  },
+  detailsButton: {
+    padding: 5,
+    borderWidth: 1,
+  },
+  fab: {
+    position: 'absolute',
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    right: 20,
+    bottom: 70,
+    backgroundColor: 'blue',
+    borderRadius: 30,
+    elevation: 5,
+  },
+  fabText: {
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
+  },
+});

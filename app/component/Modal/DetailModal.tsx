@@ -1,9 +1,5 @@
-import React, { useState } from 'react';
-import { Modal, StyleSheet, Text, Pressable, View, Alert, TextInput, Button, TouchableOpacity } from 'react-native';
-import { Picker as SelectPicker } from '@react-native-picker/picker';
-import { useDispatch, useSelector } from 'react-redux';
-import { addBookMark, addCategory } from '../../data/slice/bookmarkSlice';
-import { RootState } from '../../data/store/store';
+import React from 'react';
+import { Modal, StyleSheet, Text, Alert, View, Button } from 'react-native';
 
 interface ModalProps {
   visible: boolean, 
@@ -14,7 +10,6 @@ interface ModalProps {
 }
 
 const DetailModal: React.FC<ModalProps> = ({ visible, title, url, category, handleModalClose }) => {
-  
   return (
     <Modal
       animationType="slide"
@@ -24,12 +19,12 @@ const DetailModal: React.FC<ModalProps> = ({ visible, title, url, category, hand
         Alert.alert('Modal has been closed.');
         handleModalClose();
       }}>
-      <View style={{ flex: 1, justifyContent: 'center', padding: 16, backgroundColor: 'rgba(0,0,0,0.5)' }}>
-        <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
-          <Text style={{fontSize: 22, color: '#000'}}>Title: {title}</Text>
-          <Text style={{fontSize: 22, color: '#000', marginTop: 10}}>URL: {url}</Text>
-          <Text style={{fontSize: 22, color: '#000', marginTop: 10}}>Category: {category}</Text>
-          <View style={{marginVertical: 10}}/>
+      <View style={styles.overlay}>
+        <View style={styles.modalView}>
+          <Text style={styles.text}>Title: {title}</Text>
+          <Text style={styles.text}>URL: {url}</Text>
+          <Text style={styles.text}>Category: {category}</Text>
+          <View style={styles.separator} />
           <Button title="Close" onPress={handleModalClose} />
         </View>
       </View>
@@ -37,48 +32,25 @@ const DetailModal: React.FC<ModalProps> = ({ visible, title, url, category, hand
   );
 };
 
-
 const styles = StyleSheet.create({
-  centeredView: {
+  overlay: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    padding: 16,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalView: {
-    margin: 20,
     backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    padding: 20,
+    borderRadius: 10,
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+  text: {
+    fontSize: 22,
+    color: '#000',
+    marginTop: 10,
   },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
+  separator: {
+    marginVertical: 10,
   },
 });
 
