@@ -32,7 +32,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
     if (title && url && (selectedCategory || newCategoryName)) {
       const category = showNewCategoryInput ? newCategoryName : selectedCategory;
       dispatch(addBookMark({ category, bookmark: { title, url } }));
-      onClose(); // Close the modal after adding bookmark
+      onClose(); 
     }
   };
 
