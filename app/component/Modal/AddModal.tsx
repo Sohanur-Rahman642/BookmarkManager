@@ -28,7 +28,6 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
         setShowNewCategoryInput(true)
         setSelectedCategory(newCategoryName)
         dispatch(addCategory(newCategoryName))
-        
     }
   }
 
@@ -61,7 +60,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
       visible={visible}
       onRequestClose={() => {
         Alert.alert('Modal has been closed.');
-        onClose();
+        handleModalClose();
       }}>
       <View style={{ flex: 1, justifyContent: 'center', padding: 16, backgroundColor: 'rgba(0,0,0,0.5)' }}>
         <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
