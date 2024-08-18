@@ -4,18 +4,24 @@ import {
   StatusBar,
   StyleSheet,
 } from 'react-native';
+import { Provider } from 'react-redux';
+import { persistor, store } from './data/store/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 
 function App(): React.JSX.Element {
 
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor='#fff'
-      />
-   
-    </SafeAreaView>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+          <SafeAreaView style={{flex: 1}}>
+          <StatusBar
+            barStyle={'dark-content'}
+            backgroundColor='#fff'
+          />
+          </SafeAreaView>
+      </PersistGate>
+    </Provider>
   );
 }
 
