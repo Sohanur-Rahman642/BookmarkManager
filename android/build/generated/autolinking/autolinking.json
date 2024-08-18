@@ -27,6 +27,34 @@
           "isPureCxxDependency": false
         }
       }
+    },
+    "@react-native-picker/picker": {
+      "root": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-picker\\picker",
+      "name": "@react-native-picker/picker",
+      "platforms": {
+        "ios": {
+          "podspecPath": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-picker\\picker\\RNCPicker.podspec",
+          "version": "2.7.7",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-picker\\picker\\android",
+          "packageImportPath": "import com.reactnativecommunity.picker.RNCPickerPackage;",
+          "packageInstance": "new RNCPickerPackage()",
+          "buildTypes": [],
+          "libraryName": "rnpicker",
+          "componentDescriptors": [
+            "RNCAndroidDialogPickerComponentDescriptor",
+            "RNCAndroidDropdownPickerComponentDescriptor"
+          ],
+          "cmakeListsPath": "E:/Sohan/react native/BookmarkManager/node_modules/@react-native-picker/picker/android/src/main/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
     }
   },
   "commands": [
