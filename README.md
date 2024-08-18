@@ -12,4 +12,8 @@
 - Redux persist
 - Async storage
 
+### Insturction to build & run: 
+- npm install / yarn install 
+- npx react-native run-android
+
 
