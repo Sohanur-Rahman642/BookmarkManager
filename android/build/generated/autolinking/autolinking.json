@@ -2,7 +2,33 @@
   "root": "E:\\Sohan\\react native\\BookmarkManager",
   "reactNativePath": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\react-native",
   "reactNativeVersion": "0.75",
-  "dependencies": {},
+  "dependencies": {
+    "@react-native-async-storage/async-storage": {
+      "root": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-async-storage\\async-storage",
+      "name": "@react-native-async-storage/async-storage",
+      "platforms": {
+        "ios": {
+          "podspecPath": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-async-storage\\async-storage\\RNCAsyncStorage.podspec",
+          "version": "1.24.0",
+          "configurations": [],
+          "scriptPhases": []
+        },
+        "android": {
+          "sourceDir": "E:\\Sohan\\react native\\BookmarkManager\\node_modules\\@react-native-async-storage\\async-storage\\android",
+          "packageImportPath": "import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;",
+          "packageInstance": "new AsyncStoragePackage()",
+          "buildTypes": [],
+          "libraryName": "rnasyncstorage",
+          "componentDescriptors": [],
+          "cmakeListsPath": "E:/Sohan/react native/BookmarkManager/node_modules/@react-native-async-storage/async-storage/android/build/generated/source/codegen/jni/CMakeLists.txt",
+          "cxxModuleCMakeListsModuleName": null,
+          "cxxModuleCMakeListsPath": null,
+          "cxxModuleHeaderName": null,
+          "isPureCxxDependency": false
+        }
+      }
+    }
+  },
   "commands": [
     {
       "name": "bundle",
