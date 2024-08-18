@@ -101,6 +101,7 @@ export default function BookmarkManager() {
   return (
     <View style={styles.container}>
       <Text style={styles.appTitle}>BookMark Manager</Text>
+      <Text style={styles.addBookmarkText}>Add some bookmarks</Text>
       <FlatList
         data={Object.keys(categories)}
         renderItem={renderCategoryItem}
@@ -132,6 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   appTitle: {textAlign: 'center', fontSize: 32, fontWeight: 'bold', color: 'black'},
+  addBookmarkText: {textAlign: 'center', fontSize: 22, fontWeight: 'bold', color: 'grey'},
   categoryList: {
     flex: 1,
   },

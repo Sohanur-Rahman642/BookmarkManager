@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
   input: {
     borderBottomWidth: 1,
     marginBottom: 16,
+    color: 'black'
   },
   categoryContainer: {
     flexDirection: 'row',
