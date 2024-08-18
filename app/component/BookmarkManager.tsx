@@ -74,7 +74,7 @@ export default function BookmarkManager() {
         <TouchableOpacity 
           style={styles.detailsButton} 
           onPress={() => handlePressDetails(bookmark, category)} >
-            <Text>Details</Text>
+            <Text style={{color: 'black'}}>Details</Text>
         </TouchableOpacity>
       </View>
     )
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: 'white'
   },
-  appTitle: {textAlign: 'center', fontSize: 32, fontWeight: 'bold'},
+  appTitle: {textAlign: 'center', fontSize: 32, fontWeight: 'bold', color: 'black'},
   categoryList: {
     flex: 1,
   },
@@ -141,6 +141,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'black'
   },
   bookmarkList: {
     marginTop: 10,

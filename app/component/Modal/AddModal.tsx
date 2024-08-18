@@ -62,6 +62,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
         <View style={styles.modalView}>
           <TextInput
             placeholder="Title"
+            placeholderTextColor='black'
             value={title}
             onChangeText={setTitle}
             maxLength={30}
@@ -69,6 +70,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
           />
           <TextInput
             placeholder="URL"
+            placeholderTextColor='black'
             value={url}
             onChangeText={setUrl}
             keyboardType="url"
@@ -78,6 +80,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
             <View style={styles.categoryInputContainer}>
               <TextInput
                 placeholder="Category"
+                placeholderTextColor='black'
                 value={newCategoryName}
                 onChangeText={setNewCategoryName}
                 style={styles.input}
@@ -95,6 +98,7 @@ const AddModal: React.FC<ModalProps> = ({ visible, handleModalClose }) => {
           <SelectPicker
             selectedValue={selectedCategory}
             onValueChange={(itemValue) => onCategoryChange(itemValue)}
+            dropdownIconColor={'black'}
           >
             <SelectPicker.Item label="Select a category" value="" />
             {Object.keys(categories).map((category) => (
